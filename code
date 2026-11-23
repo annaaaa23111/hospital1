@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Больница — Запись к врачу</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: #1565c0;
+    color: #fff;
+    padding: 18px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  }
+  header .inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  header h2 { font-size: 20px; }
+  header nav a {
+    color: #bbdefb;
+    text-decoration: none;
+    margin-left: 18px;
+    font-size: 14px;
+    transition: color .2s;
+  }
+  header nav a:hover { color: #fff; }
+
+  main {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 30px 20px;
+  }
+  .container {
+    background: #fff;
+    width: 100%;
+    max-width: 620px;
+    padding: 35px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  h1 {
+    color: #1565c0;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #78909c;
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+  .row {
+    display: flex;
+    gap: 14px;
+  }
+  .row .form-group { flex: 1; }
+
+  label {
+    display: block;
+    font-size: 14px;
+    color: #37474f;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  input, textarea, select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cfd8dc;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, .15);
+  }
+  input.invalid, textarea.invalid, select.invalid {
+    border-color: #e53935;
+    background: #ffebee;
+  }
+  .error {
+    color: #e53935;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+  }
+  .error.show { display: block; }
+
+  .divider {
+    border: none;
+    border-top: 1px dashed #cfd8dc;
+    margin: 22px 0 18px;
+  }
+  .section-title {
+    font-size: 15px;
+    color: #1565c0;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  button:hover { background: #1565c0; }
+
+  .success {
+    display: none;
+    margin-top: 16px;
+    padding: 12px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+  }
+  .success.show { display: block; }
+
+  footer {
+    background: #0d47a1;
+    color: #90caf9;
+    text-align: center;
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 520px) {
+    .row { flex-direction: column; gap: 0; }
+    .container { padding: 25px 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="inner">
+      <h2>🏥 Городская больница №1</h2>
+      <nav>
+        <a href="#">Главная</a>
+        <a href="#">Врачи</a>
+        <a href="#">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1>Запись к врачу</h1>
+      <p class="subtitle">Заполните форму, чтобы записаться на приём</p>
+
+      <form id="appointmentForm" novalidate>
+
+        <div class="section-title">Личные данные</div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="lastName">Фамилия *</label>
+            <input type="text" id="lastName" placeholder="Иванов">
+            <div class="error" id="err-lastName">Только буквы, от 2 символов</div>
+          </div>
+          <div class="form-group">
+            <label for="firstName">Имя *</label>
+            <input type="text" id="firstName" placeholder="Иван">
+            <div class="error" id="err-firstName">Только буквы, от 2 символов</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="middleName">Отчество *</label>
+          <input type="text" id="middleName" placeholder="Иванович">
+          <div class="error" id="err-middleName">Только буквы, от 2 символов</div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="birthDate">Дата рождения *</label>
+            <input type="date" id="birthDate">
+            <div class="error" id="err-birthDate">Корректная дата, не в будущем</div>
+          </div>
+          <div class="form-group">
+            <label for="snils">СНИЛС *</label>
+            <input type="text" id="snils" placeholder="123-456-789 00" maxlength="14">
+            <div class="error" id="err-snils">Формат: 123-456-789 00</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Место проживания *</label>
+          <textarea id="address" rows="2" placeholder="г. Москва, ул. Ленина, д. 1, кв. 5"></textarea>
+          <div class="error" id="err-address">Укажите адрес (от 5 символов)</div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Номер телефона *</label>
+          <input type="tel" id="phone" placeholder="+7 (999) 123-45-67">
+          <div class="error" id="err-phone">Формат: +7 (999) 123-45-67</div>
+        </div>
+
+        <hr class="divider">
+        <div class="section-title">Данные о приёме</div>
+
+        <div class="form-group">
+          <label for="doctor">Врач / специальность *</label>
+          <select id="doctor">
+            <option value="">— выберите врача —</option>
+            <option value="therapist">Терапевт</option>
+            <option value="surgeon">Хирург</option>
+            <option value="neurologist">Невролог</option>
+            <option value="cardiologist">Кардиолог</option>
+            <option value="dentist">Стоматолог</option>
+            <option value="oculist">Окулист</option>
+          </select>
+          <div class="error" id="err-doctor">Выберите врача</div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="visitDate">Дата приёма *</label>
+            <input type="date" id="visitDate">
+            <div class="error" id="err-visitDate">Выберите дату не раньше сегодня</div>
+          </div>
+          <div class="form-group">
+            <label for="visitTime">Время приёма *</label>
+            <select id="visitTime">
+              <option value="">— время —</option>
+              <option value="09:00">09:00</option>
+              <option value="10:00">10:00</option>
+              <option value="11:00">11:00</option>
+              <option value="12:00">12:00</option>
+              <option value="14:00">14:00</option>
+              <option value="15:00">15:00</option>
+              <option value="16:00">16:00</option>
+              <option value="17:00">17:00</option>
+            </select>
+            <div class="error" id="err-visitTime">Выберите время</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="comment">Комментарий (необязательно)</label>
+          <textarea id="comment" rows="2" placeholder="Опишите жалобы или причину обращения"></textarea>
+        </div>
+
+        <button type="submit">Записаться на приём</button>
+        <div class="success" id="successMsg">
+          ✅ Вы успешно записаны к врачу! Мы позвоним для подтверждения.
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Городская больница №1 · ул. Здоровья, д. 10 · +7 (495) 000-00-00
+  </footer>
+
+<script>
+const form = document.getElementById('appointmentForm');
+const successMsg = document.getElementById('successMsg');
+
+const fields = [
+  'lastName', 'firstName', 'middleName', 'birthDate',
+  'snils', 'address', 'phone',
+  'doctor', 'visitDate', 'visitTime'
+];
+
+const nameRegex = /^[А-Яа-яЁёA-Za-z\-]{2,}$/;
+const snilsRegex = /^\d{3}-\d{3}-\d{3} \d{2}$/;
+const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
+
+function showError(id, show) {
+  const input = document.getElementById(id);
+  const err = document.getElementById('err-' + id);
+  if (!input || !err) return;
+  input.classList.toggle('invalid', show);
+  err.classList.toggle('show', show);
+}
+
+function todayStr() {
+  const d = new Date();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${d.getFullYear()}-${m}-${day}`;
+}
+
+function validateField(id) {
+  const el = document.getElementById(id);
+  const value = el.value.trim();
+  let valid = true;
+
+  switch (id) {
+    case 'lastName':
+    case 'firstName':
+    case 'middleName':
+      valid = nameRegex.test(value);
+      break;
+    case 'birthDate':
+      if (!value) { valid = false; break; }
+      valid = new Date(value) <= new Date();
+      break;
+    case 'snils':
+      valid = snilsRegex.test(value);
+      break;
+    case 'address':
+      valid = value.length >= 5;
+      break;
+    case 'phone':
+      valid = phoneRegex.test(value);
+      break;
+    case 'doctor':
+    case 'visitTime':
+      valid = value !== '';
+      break;
+    case 'visitDate':
+      if (!value) { valid = false; break; }
+      valid = value >= todayStr();
+      break;
+  }
+
+  showError(id, !valid);
+  return valid;
+}
+
+const visitDateInput = document.getElementById('visitDate');
+visitDateInput.min = todayStr();
+document.getElementById('birthDate').max = todayStr();
+
+document.getElementById('snils').addEventListener('input', (e) => {
+  let digits = e.target.value.replace(/\D/g, '').slice(0, 11);
+  let result = digits;
+  if (digits.length > 3) result = digits.slice(0, 3) + '-' + digits.slice(3);
+  if (digits.length > 6) result = digits.slice(0, 3) + '-' + digits.slice(3, 6) + '-' + digits.slice(6);
+  if (digits.length > 9) result = digits.slice(0, 3) + '-' + digits.slice(3, 6) + '-' + digits.slice(6, 9) + ' ' + digits.slice(9);
+  e.target.value = result;
+});
+
+document.getElementById('phone').addEventListener('input', (e) => {
+  let digits = e.target.value.replace(/\D/g, '');
+  if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+  if (!digits.startsWith('7')) digits = '7' + digits;
+  digits = digits.slice(0, 11);
+
+  let result = '+7';
+  if (digits.length > 1) result += ' (' + digits.slice(1, 4);
+  if (digits.length >= 5) result += ') ' + digits.slice(4, 7);
+  if (digits.length >= 8) result += '-' + digits.slice(7, 9);
+  if (digits.length >= 10) result += '-' + digits.slice(9, 11);
+  e.target.value = result;
+});
+
+fields.forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('blur', () => validateField(id));
+  el.addEventListener('change', () => validateField(id));
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  successMsg.classList.remove('show');
+
+  let allValid = true;
+  fields.forEach(id => {
+    if (!validateField(id)) allValid = false;
+  });
+
+  if (allValid) {
+    successMsg.classList.add('show');
+    form.reset();
+    fields.forEach(id => showError(id, false));
+    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
+</script>
+</body>
+</html>
