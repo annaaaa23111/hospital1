@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Больница — Запись к врачу</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <div class="inner">
+      <h2>🏥 Городская больница №1</h2>
+      <nav>
+        <a href="#">Главная</a>
+        <a href="#">Врачи</a>
+        <a href="#">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1>Запись к врачу</h1>
+      <p class="subtitle">Заполните форму, чтобы записаться на приём</p>
+
+      <form id="appointmentForm" novalidate>
+        <div class="section-title">Личные данные</div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="lastName">Фамилия *</label>
+            <input type="text" id="lastName" placeholder="Иванов">
+            <div class="error" id="err-lastName">Только буквы, от 2 символов</div>
+          </div>
+
+          <div class="form-group">
+            <label for="firstName">Имя *</label>
+            <input type="text" id="firstName" placeholder="Иван">
+            <div class="error" id="err-firstName">Только буквы, от 2 символов</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="middleName">Отчество *</label>
+          <input type="text" id="middleName" placeholder="Иванович">
+          <div class="error" id="err-middleName">Только буквы, от 2 символов</div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="birthDate">Дата рождения *</label>
+            <input type="date" id="birthDate">
+            <div class="error" id="err-birthDate">Корректная дата, не в будущем</div>
+          </div>
+
+          <div class="form-group">
+            <label for="snils">СНИЛС *</label>
+            <input type="text" id="snils" placeholder="123-456-789 00" maxlength="14">
+            <div class="error" id="err-snils">Формат: 123-456-789 00</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Место проживания *</label>
+          <textarea id="address" rows="2" placeholder="г. Москва, ул. Ленина, д. 1, кв. 5"></textarea>
+          <div class="error" id="err-address">Укажите адрес (от 5 символов)</div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Номер телефона *</label>
+          <input type="tel" id="phone" placeholder="+7 (999) 123-45-67">
+          <div class="error" id="err-phone">Формат: +7 (999) 123-45-67</div>
+        </div>
+
+        <hr class="divider">
+        <div class="section-title">Данные о приёме</div>
+
+        <div class="form-group">
+          <label for="doctor">Врач / специальность *</label>
+          <select id="doctor">
+            <option value="">— выберите врача —</option>
+            <option value="therapist">Терапевт</option>
+            <option value="surgeon">Хирург</option>
+            <option value="neurologist">Невролог</option>
+            <option value="cardiologist">Кардиолог</option>
+            <option value="dentist">Стоматолог</option>
+            <option value="oculist">Окулист</option>
+          </select>
+          <div class="error" id="err-doctor">Выберите врача</div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="visitDate">Дата приёма *</label>
+            <input type="date" id="visitDate">
+            <div class="error" id="err-visitDate">Выберите дату не раньше сегодня</div>
+          </div>
+
+          <div class="form-group">
+            <label for="visitTime">Время приёма *</label>
+            <select id="visitTime">
+              <option value="">— время —</option>
+              <option value="09:00">09:00</option>
+              <option value="10:00">10:00</option>
+              <option value="11:00">11:00</option>
+              <option value="12:00">12:00</option>
+              <option value="14:00">14:00</option>
+              <option value="15:00">15:00</option>
+              <option value="16:00">16:00</option>
+              <option value="17:00">17:00</option>
+            </select>
+            <div class="error" id="err-visitTime">Выберите время</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="comment">Комментарий (необязательно)</label>
+          <textarea id="comment" rows="2" placeholder="Опишите жалобы или причину обращения"></textarea>
+        </div>
+
+        <button type="submit">Записаться на приём</button>
+
+        <div class="success" id="successMsg">
+          ✅ Вы успешно записаны к врачу! Мы позвоним для подтверждения.
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Городская больница №1 · ул. Здоровья, д. 10 · +7 (495) 000-00-00
+  </footer>
+
+</body>
+</html>
