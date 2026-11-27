@@ -29,7 +29,7 @@ function todayStr() {
 function validateField(id) {
   const el = document.getElementById(id);
   const value = el.value.trim();
-  let valid = true;
+  var valid = true;
 
   switch (id) {
     case 'lastName':
@@ -69,8 +69,8 @@ visitDateInput.min = todayStr();
 document.getElementById('birthDate').max = todayStr();
 
 document.getElementById('snils').addEventListener('input', (e) => {
-  let digits = e.target.value.replace(/\D/g, '').slice(0, 11);
-  let result = digits;
+  var digits = e.target.value.replace(/\D/g, '').slice(0, 11);
+  var result = digits;
   if (digits.length > 3) result = digits.slice(0, 3) + '-' + digits.slice(3);
   if (digits.length > 6) result = digits.slice(0, 3) + '-' + digits.slice(3, 6) + '-' + digits.slice(6);
   if (digits.length > 9) result = digits.slice(0, 3) + '-' + digits.slice(3, 6) + '-' + digits.slice(6, 9) + ' ' + digits.slice(9);
@@ -78,12 +78,12 @@ document.getElementById('snils').addEventListener('input', (e) => {
 });
 
 document.getElementById('phone').addEventListener('input', (e) => {
-  let digits = e.target.value.replace(/\D/g, '');
+  var digits = e.target.value.replace(/\D/g, '');
   if (digits.startsWith('8')) digits = '7' + digits.slice(1);
   if (!digits.startsWith('7')) digits = '7' + digits;
   digits = digits.slice(0, 11);
 
-  let result = '+7';
+  var result = '+7';
   if (digits.length > 1) result += ' (' + digits.slice(1, 4);
   if (digits.length >= 5) result += ') ' + digits.slice(4, 7);
   if (digits.length >= 8) result += '-' + digits.slice(7, 9);
@@ -102,7 +102,7 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   successMsg.classList.remove('show');
 
-  let allValid = true;
+  var allValid = true;
   fields.forEach(id => {
     if (!validateField(id)) allValid = false;
   });
